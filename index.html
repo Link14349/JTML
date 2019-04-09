@@ -5,6 +5,8 @@
     <title>JTML</title>
     <script type="text/javascript" src="dependencies/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="dist/index.js"></script>
+    <script type="text/javascript" src="dist/value.js"></script>
+    <script type="text/javascript" src="dist/control-flow.js"></script>
 </head>
 <body>
 <set>
@@ -14,5 +16,8 @@
 <p>Name: <show>name</show></p>
 <p>Version: <show>version</show></p>
 <p>Time: <show>(new Date()).toUTCString()</show></p>
+<if conditional="1 + 1 == 2">
+    <p>1+1=2!</p>
+</if>
 </body>
 </html>

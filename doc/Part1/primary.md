@@ -21,3 +21,13 @@ Use tag `<set><token>variable-name</token> <value>set value</value></set>`.
 <p>name: <show>name</show></p>
 <p>version: <show>version</show></p>
 ```
+
+If statement
+-----------------
+Use tag `<if conditional="conditional"><!--JTML code here--></if>`.
+#### example
+```html
+<if conditional="1 + 1 == 2">
+    <p>1+1=2!</p>
+</if>
+```
