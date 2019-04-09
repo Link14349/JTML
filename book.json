@@ -1,0 +1,11 @@
+{
+  "title": "JTML",
+  "author": "yhzheng",
+  "description": "It's a Scripted HTML format.",
+  "language": "zh-hans",
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/qianduanXIAOHAOZI/JTML"
+    }
+  }
+}
