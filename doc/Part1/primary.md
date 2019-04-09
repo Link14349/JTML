@@ -3,7 +3,7 @@ Primary Language Structure
 
 Show value
 ------------
-Use tag `<show>expression</show>`
+Use tag `<show>expression</show>`.
 #### example
 ```html
 Time: <show>(new Date()).toUTCString()</show>
@@ -11,7 +11,7 @@ Time: <show>(new Date()).toUTCString()</show>
 
 Set variable
 ---------------
-Use tag `<set><token>variable-name</token> <value>set value</value></set>`
+Use tag `<set><token>variable-name</token> <value>set value</value></set>`.
 #### example
 ```html
 <set>

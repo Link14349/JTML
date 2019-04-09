@@ -1,5 +1,15 @@
 "use strict";
 
+/*!
+
+ * JTML Library
+
+ * yhzheng - v0.0.1
+
+ * https://github.com/qianduanXIAOHAOZI/JTML | Released under MIT license
+
+ */
+
 var JTML = {};
 var global = globalThis;
 
@@ -7,7 +17,6 @@ var global = globalThis;
     JTML.DOMAIN = $(null);
     JTML.compileNow = true;
     JTML.compiler = {};
-    JTML.defines = {};
 
     JTML.each = function (tag, cb) {
         var tags = tag.children();
@@ -52,7 +61,6 @@ var global = globalThis;
             }
             if (tags[i].localName == "value") {
                 var t = $(tags[i]).text();
-                if (JTML.defines[t] !== undefined) t = JTML.defines[t];
                 value = eval(t);
                 gotValue = true;
                 if (gotName) {
@@ -66,7 +74,6 @@ var global = globalThis;
         var v = void 0;
         try {
             var t = tag.text();
-            if (JTML.defines[t] !== undefined) t = JTML.defines[t];
             v = eval(t);
         } catch (e) {
             console.error(new Error("Show expression error"));
@@ -76,34 +83,6 @@ var global = globalThis;
         tag.text(v);
         return v;
     }, "show", false, false);
-    JTML.compiler.$compiler(function define(tag) {
-        var tags = tag.children();
-        var tokenName = "",
-            value = null;
-        var gotName = false,
-            gotValue = false;
-        for (var i = 0; i < tags.length; i++) {
-            if (tags[i].localName == "token") {
-                tokenName = $(tags[i]).text();
-                gotName = true;
-                if (gotValue) {
-                    JTML.defines[tokenName] = value;
-                    gotValue = false;
-                    gotName = false;
-                }
-            }
-            if (tags[i].localName == "value") {
-                value = $(tags[i]).text();
-                gotValue = true;
-                if (gotName) {
-                    JTML.defines[tokenName] = value;
-                    gotValue = false;
-                    gotName = false;
-                }
-            }
-        }
-        return value;
-    }, "define", true, false);
 
     JTML.compile = function () {
         var domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : JTML.DOMAIN;

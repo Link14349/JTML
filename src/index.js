@@ -1,3 +1,13 @@
+/*!
+
+ * JTML Library
+
+ * yhzheng - v0.0.1
+
+ * https://github.com/qianduanXIAOHAOZI/JTML | Released under MIT license
+
+ */
+
 const JTML = {};
 const global = globalThis;
 
@@ -5,7 +15,6 @@ const global = globalThis;
     JTML.DOMAIN = $(null);
     JTML.compileNow = true;
     JTML.compiler = {};
-    JTML.defines = {};
 
     JTML.each = function (tag, cb) {
         let tags = tag.children();
@@ -44,7 +53,6 @@ const global = globalThis;
             }
             if (tags[i].localName == "value") {
                 let t = $(tags[i]).text();
-                if (JTML.defines[t] !== undefined) t = JTML.defines[t];
                 value = eval(t);
                 gotValue = true;
                 if (gotName) {
@@ -58,7 +66,6 @@ const global = globalThis;
         let v;
         try {
             let t = tag.text();
-            if (JTML.defines[t] !== undefined) t = JTML.defines[t];
             v = eval(t);
         } catch (e) {
             console.error(new Error("Show expression error"));
@@ -68,32 +75,6 @@ const global = globalThis;
         tag.text(v);
         return v;
     }, "show", false, false);
-    JTML.compiler.$compiler(function define(tag) {
-        let tags = tag.children();
-        let tokenName = "", value = null;
-        let gotName = false, gotValue = false;
-        for (let i = 0; i < tags.length; i++) {
-            if (tags[i].localName == "token") {
-                tokenName = $(tags[i]).text();
-                gotName = true;
-                if (gotValue) {
-                    JTML.defines[tokenName] = value;
-                    gotValue = false;
-                    gotName = false;
-                }
-            }
-            if (tags[i].localName == "value") {
-                value = $(tags[i]).text();
-                gotValue = true;
-                if (gotName) {
-                    JTML.defines[tokenName] = value;
-                    gotValue = false;
-                    gotName = false;
-                }
-            }
-        }
-        return value;
-    }, "define", true, false);
 
     JTML.compile = function (domain = JTML.DOMAIN) {
         JTML.each(domain, function (tag) {
