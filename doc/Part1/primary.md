@@ -3,7 +3,7 @@ Primary Language Structure
 
 Show value
 ------------
-Use tag `<show>expression</show>`
+Use tag `<show>expression</show>`.
 #### example
 ```html
 Time: <show>(new Date()).toUTCString()</show>
@@ -11,7 +11,7 @@ Time: <show>(new Date()).toUTCString()</show>
 
 Set variable
 ---------------
-Use tag `<set><token>variable-name</token> <value>set value</value></set>`
+Use tag `<set><token>variable-name</token> <value>set value</value></set>`.
 #### example
 ```html
 <set>
@@ -20,4 +20,25 @@ Use tag `<set><token>variable-name</token> <value>set value</value></set>`
 </set>
 <p>name: <show>name</show></p>
 <p>version: <show>version</show></p>
+```
+
+If statement
+-----------------
+Use tag `<if conditional="conditional"><!--JTML code here--></if>`.
+Use tag `<elif conditional="conditional"><!--JTML code here--></elif>` when the if statement does not hold.
+Use tag `<else><!--JTML code here--></else>` when the if statement and elif statement don't hold.
+#### example
+```html
+<if conditional="1 + 2 == 1">
+    <p>1+2=1</p>
+</if>
+<elif conditional="1 + 2 == 2">
+    <p>1+2=2</p>
+</elif>
+<elif conditional="1 + 2 == 3">
+    <p>1+2=3</p>
+</elif>
+<else>
+    <p>unknown</p>
+</else>
 ```

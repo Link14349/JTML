@@ -29,3 +29,14 @@ Calling the `JTML.compile([domain=JTML.DOMAIN])` function compiles the JTML code
 
 ## Writing code
 Read [Code Structure-primary](Part1/primary.md)
+
+## Read this documentation with browser
+Install gitbook first.
+```bash
+npm install gitbook-cli -g
+```
+Then start server.
+```bash
+gitbook serve
+```
+Finally, browsers access `http://localhost:4000`.

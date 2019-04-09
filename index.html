@@ -5,19 +5,28 @@
     <title>JTML</title>
     <script type="text/javascript" src="dependencies/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="dist/index.js"></script>
+    <script type="text/javascript" src="dist/value.js"></script>
+    <script type="text/javascript" src="dist/control-flow.js"></script>
 </head>
 <body>
 <set>
     <token>name</token> <value>"JTML"</value>
     <token>version</token> <value>"v-0.0.1"</value>
 </set>
-<define>
-    <token>TEST</token> <value>(1 + 1)</value>
-</define>
 <p>Name: <show>name</show></p>
 <p>Version: <show>version</show></p>
 <p>Time: <show>(new Date()).toUTCString()</show></p>
-<p>Defined TEST: <show>JTML.defines["TEST"]</show></p>
-<p>Defined TEST value: <show>TEST</show></p>
+<if conditional="1 + 2 == 1">
+    <p>1+2=1</p>
+</if>
+<elif conditional="1 + 2 == 2">
+    <p>1+2=2</p>
+</elif>
+<elif conditional="1 + 2 == 3">
+    <p>1+2=3</p>
+</elif>
+<else>
+    <p>unknown</p>
+</else>
 </body>
 </html>
