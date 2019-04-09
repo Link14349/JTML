@@ -28,6 +28,13 @@ const global = globalThis;
         JTML.compiler[name].hide = hide;
         JTML.compiler[name].recursion = recursion;
     };
+    JTML.compiler.$compilerDefine = function (name, attr, val) {
+        JTML.compiler[name][attr] = val;
+    };
+    JTML.compiler.$ignoreDict = {};
+    JTML.compiler.$ignore = function (tagName) {
+        JTML.compiler.$ignoreDict[tagName] = true;
+    };
 
     JTML.compile = function (domain = JTML.DOMAIN) {
         JTML.each(domain, function (tag) {

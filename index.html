@@ -16,8 +16,17 @@
 <p>Name: <show>name</show></p>
 <p>Version: <show>version</show></p>
 <p>Time: <show>(new Date()).toUTCString()</show></p>
-<if conditional="1 + 1 == 2">
-    <p>1+1=2!</p>
+<if conditional="1 + 2 == 1">
+    <p>1+2=1</p>
 </if>
+<elif conditional="1 + 2 == 2">
+    <p>1+2=2</p>
+</elif>
+<elif conditional="1 + 2 == 3">
+    <p>1+2=3</p>
+</elif>
+<else>
+    <p>unknown</p>
+</else>
 </body>
 </html>

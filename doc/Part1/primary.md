@@ -25,9 +25,20 @@ Use tag `<set><token>variable-name</token> <value>set value</value></set>`.
 If statement
 -----------------
 Use tag `<if conditional="conditional"><!--JTML code here--></if>`.
+Use tag `<elif conditional="conditional"><!--JTML code here--></elif>` when the if statement does not hold.
+Use tag `<else><!--JTML code here--></else>` when the if statement and elif statement don't hold.
 #### example
 ```html
-<if conditional="1 + 1 == 2">
-    <p>1+1=2!</p>
+<if conditional="1 + 2 == 1">
+    <p>1+2=1</p>
 </if>
+<elif conditional="1 + 2 == 2">
+    <p>1+2=2</p>
+</elif>
+<elif conditional="1 + 2 == 3">
+    <p>1+2=3</p>
+</elif>
+<else>
+    <p>unknown</p>
+</else>
 ```

@@ -34,6 +34,13 @@ var global = globalThis;
         JTML.compiler[name].hide = hide;
         JTML.compiler[name].recursion = recursion;
     };
+    JTML.compiler.$compilerDefine = function (name, attr, val) {
+        JTML.compiler[name][attr] = val;
+    };
+    JTML.compiler.$ignoreDict = {};
+    JTML.compiler.$ignore = function (tagName) {
+        JTML.compiler.$ignoreDict[tagName] = true;
+    };
 
     JTML.compile = function () {
         var domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : JTML.DOMAIN;
