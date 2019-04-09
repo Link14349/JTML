@@ -4,17 +4,79 @@ var JTML = {};
 var global = globalThis;
 
 !function (JTML) {
-    JTML.DOMAIN = $("body:first");
+    JTML.DOMAIN = $(null);
     JTML.compileNow = true;
     JTML.compiler = {};
+    JTML.defines = {};
+
+    JTML.each = function (tag, cb) {
+        var tags = tag.children();
+        for (var i = 0; i < tags.length; i++) {
+            if (!cb(tags[i])) JTML.each($(tags[i]), cb);
+        }
+    };
+
     JTML.compiler.$compiler = function (fun) {
         var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : fun.name;
         var hide = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+        var recursion = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
 
         JTML.compiler[name] = fun;
         JTML.compiler[name].hide = hide;
+        JTML.compiler[name].recursion = recursion;
     };
     JTML.compiler.$compiler(function set(tag) {
+        var tags = tag.children();
+        var tokenName = "",
+            value = null;
+        var gotName = false,
+            gotValue = false;
+        var i = void 0;
+        function set() {
+            var tokens = tokenName.split(".");
+            var tmp = global;
+            for (var _i = 0; _i < tokens.length - 1; _i++) {
+                tmp = tmp[tokens[_i]];
+            }
+            tmp[tokens[tokens.length - 1]] = value;
+            gotValue = false;
+            gotName = false;
+        }
+        for (i = 0; i < tags.length; i++) {
+            if (tags[i].localName == "token") {
+                tokenName = $(tags[i]).text();
+                gotName = true;
+                if (gotValue) {
+                    set();
+                }
+            }
+            if (tags[i].localName == "value") {
+                var t = $(tags[i]).text();
+                if (JTML.defines[t] !== undefined) t = JTML.defines[t];
+                value = eval(t);
+                gotValue = true;
+                if (gotName) {
+                    set();
+                }
+            }
+        }
+        return value;
+    }, "set", true, false);
+    JTML.compiler.$compiler(function show(tag) {
+        var v = void 0;
+        try {
+            var t = tag.text();
+            if (JTML.defines[t] !== undefined) t = JTML.defines[t];
+            v = eval(t);
+        } catch (e) {
+            console.error(new Error("Show expression error"));
+            console.error(e);
+            return null;
+        }
+        tag.text(v);
+        return v;
+    }, "show", false, false);
+    JTML.compiler.$compiler(function define(tag) {
         var tags = tag.children();
         var tokenName = "",
             value = null;
@@ -25,47 +87,24 @@ var global = globalThis;
                 tokenName = $(tags[i]).text();
                 gotName = true;
                 if (gotValue) {
-                    var tokens = tokenName.split(".");
-                    var tmp = global;
-                    for (var _i = 0; _i < tokens.length - 1; _i++) {
-                        tmp = tmp[tokens[_i]];
-                    }
-                    tmp[tokens[tokens.length - 1]] = value;
+                    JTML.defines[tokenName] = value;
                     gotValue = false;
                     gotName = false;
                 }
             }
             if (tags[i].localName == "value") {
-                value = eval($(tags[i]).text());
+                value = $(tags[i]).text();
                 gotValue = true;
                 if (gotName) {
-                    var _tokens = tokenName.split(".");
-                    var _tmp = global;
-                    for (var _i2 = 0; _i2 < _tokens.length - 1; _i2++) {
-                        _tmp = _tmp[_tokens[_i2]];
-                    }
-                    _tmp[_tokens[_tokens.length - 1]] = value;
+                    JTML.defines[tokenName] = value;
                     gotValue = false;
                     gotName = false;
                 }
             }
         }
         return value;
-    }, "set");
-    JTML.compiler.$compiler(function show(tag) {
-        console.log(tag.text());
-        var v = eval(tag.text());
-        tag.text(v);
-        return v;
-    }, "show", false);
+    }, "define", true, false);
 
-    JTML.each = function (tag, cb) {
-        var tags = tag.children();
-        for (var i = 0; i < tags.length; i++) {
-            cb(tags[i]);
-            JTML.each($(tags[i]), cb);
-        }
-    };
     JTML.compile = function () {
         var domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : JTML.DOMAIN;
 
@@ -76,12 +115,21 @@ var global = globalThis;
                 var tagJq = $(tag);
                 if (compiler.hide) tagJq.css("display", "none");
                 compiler(tagJq);
+                return compiler.recursion;
             }
         });
     };
 }(JTML);
 
 $(document).ready(function () {
-    if (JTML.compileNow) JTML.compile();
+    JTML.DOMAIN = $("body:first");
+
+    if (JTML.compileNow) JTML.compile(); // 编译domain内容
+
+    // 编译所有jtml标签包裹的内容
+    var jtml = $("jtml");
+    for (var i = 0; i < jtml.length; i++) {
+        JTML.compile($(jtml[i]));
+    }
 });
 //# sourceMappingURL=index.js.map
