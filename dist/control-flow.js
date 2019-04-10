@@ -53,7 +53,6 @@
     JTML.compiler.$compiler(function While(tag) {
         var conditionalContent = tag.attr("conditional");
         var content = tag.html();
-        var t = 0;
         tag.empty();
         while (eval(conditionalContent)) {
             // console.log(i);
@@ -62,8 +61,6 @@
             JTML.compile(q, true);
             tag.append(q);
             // res += content;
-            t++;
-            if (t > 100) break;
         }
     }, "while", false, false);
 }(JTML);
