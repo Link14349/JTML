@@ -44,8 +44,9 @@ var global = globalThis;
 
     JTML.compile = function () {
         var domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : JTML.DOMAIN;
+        var compileSelf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-        JTML.each(domain, function (tag) {
+        function tmp(tag) {
             var compiler = JTML.compiler[tag.localName];
             if (compiler) {
                 // 存在这个jtml转义器
@@ -54,7 +55,13 @@ var global = globalThis;
                 compiler(tagJq);
                 return compiler.recursion;
             }
-        });
+        }
+        if (compileSelf) {
+            tmp(domain[0]);
+            JTML.each(domain, tmp);
+        } else {
+            JTML.each(domain, tmp);
+        }
     };
 }(JTML);
 

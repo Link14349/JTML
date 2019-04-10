@@ -36,8 +36,8 @@ const global = globalThis;
         JTML.compiler.$ignoreDict[tagName] = true;
     };
 
-    JTML.compile = function (domain = JTML.DOMAIN) {
-        JTML.each(domain, function (tag) {
+    JTML.compile = function (domain = JTML.DOMAIN, compileSelf = false) {
+        function tmp(tag) {
             let compiler = JTML.compiler[tag.localName];
             if (compiler) {// 存在这个jtml转义器
                 let tagJq = $(tag);
@@ -45,7 +45,13 @@ const global = globalThis;
                 compiler(tagJq);
                 return compiler.recursion;
             }
-        });
+        }
+        if (compileSelf) {
+            tmp(domain[0]);
+            JTML.each(domain, tmp);
+        } else {
+            JTML.each(domain, tmp);
+        }
     };
 }(JTML);
 

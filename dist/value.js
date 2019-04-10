@@ -50,5 +50,9 @@
         tag.text(v);
         return v;
     }, "show", false, false);
+    JTML.compiler.$compiler(function value(tag) {
+        eval(tag.text());
+        // console.log(tag.text());
+    }, "value");
 }(JTML);
 //# sourceMappingURL=value.js.map

@@ -52,4 +52,22 @@
         // console.log(tag.next());
     }, "if", false, false);
     JTML.compiler.$compilerDefine("if", "");
+
+    // while loop
+    JTML.compiler.$compiler(function While(tag) {
+        let conditionalContent = tag.attr("conditional");
+        let content = tag.html();
+        let t = 0;
+        tag.empty();
+        while (eval(conditionalContent)) {
+            // console.log(i);
+            let n = String(content);
+            let q = $(n);
+            JTML.compile(q, true);
+            tag.append(q);
+            // res += content;
+            t++;
+            if (t > 100) break;
+        }
+    }, "while", false, false);
 }(JTML);
