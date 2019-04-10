@@ -42,3 +42,16 @@ Use tag `<else><!--JTML code here--></else>` when the if statement and elif stat
     <p>unknown</p>
 </else>
 ```
+
+While statement
+-----------------
+Use tag `<while conditional="conditional"><!--JTML code here--></if>`.
+#### example
+```html
+<set>
+    <token>i</token> <value>0</value>
+</set>
+<while conditional="i < 10">
+    <p><show>i++</show></p>
+</while>
+```
