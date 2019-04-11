@@ -45,7 +45,7 @@ Use tag `<else><!--JTML code here--></else>` when the if statement and elif stat
 
 While statement
 -----------------
-Use tag `<while conditional="conditional"><!--JTML code here--></if>`.
+Use tag `<while conditional="conditional"><!--JTML code here--></while>`.
 #### example
 ```html
 <set>
@@ -54,4 +54,18 @@ Use tag `<while conditional="conditional"><!--JTML code here--></if>`.
 <while conditional="i < 10">
     <p><show>i++</show></p>
 </while>
+```
+
+Do statement
+-----------------
+Use tag `<do conditional="conditional"><!--JTML code here--></do>`.
+It likes do...while in JavaScript.
+#### example
+```html
+<set>
+    <token>i</token> <value>0</value>
+</set>
+<do conditional="i < 10">
+    <p><show>i++</show></p>
+</do>
 ```

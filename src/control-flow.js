@@ -67,4 +67,19 @@
             // res += content;
         }
     }, "while", false, false);
+
+    // do...while loop
+    JTML.compiler.$compiler(function DoWhile(tag) {
+        let conditionalContent = tag.attr("conditional");
+        let content = tag.html();
+        tag.empty();
+        do {
+            // console.log(i);
+            let n = String(content);
+            let q = $(n);
+            JTML.compile(q, true);
+            tag.append(q);
+            // res += content;
+        } while (eval(conditionalContent));
+    }, "do", false, false);
 }(JTML);
