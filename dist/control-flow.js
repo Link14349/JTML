@@ -78,5 +78,24 @@
             // res += content;
         } while (eval(conditionalContent));
     }, "do", false, false);
+
+    // for loop
+    // for loop must be xx in xx format
+    JTML.compiler.$compiler(function While(tag) {
+        var conditionalContent = tag.attr("conditional");
+        var content = tag.html();
+        tag.empty();
+        var tmp = conditionalContent.split("in");
+        var tokenName = tmp[0].trim();
+        var tokens = tokenName.split(".");
+        var value = tmp[1];
+        for (var i = 0; i < tokens.length; i++) {
+            tokens[i] = tokens[i].trim();
+        }
+        var scope = global;
+        for (var _i = 0; _i < tokens.length - 1; _i++) {
+            scope = scope[tokens[_i]];
+        }
+    }, "while", false, false);
 }(JTML);
 //# sourceMappingURL=control-flow.js.map
