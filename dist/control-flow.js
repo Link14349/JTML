@@ -53,7 +53,6 @@
     JTML.compiler.$compiler(function While(tag) {
         var conditionalContent = tag.attr("conditional");
         var content = tag.html();
-        var t = 0;
         tag.empty();
         while (eval(conditionalContent)) {
             // console.log(i);
@@ -62,9 +61,22 @@
             JTML.compile(q, true);
             tag.append(q);
             // res += content;
-            t++;
-            if (t > 100) break;
         }
     }, "while", false, false);
+
+    // do...while loop
+    JTML.compiler.$compiler(function DoWhile(tag) {
+        var conditionalContent = tag.attr("conditional");
+        var content = tag.html();
+        tag.empty();
+        do {
+            // console.log(i);
+            var n = String(content);
+            var q = $(n);
+            JTML.compile(q, true);
+            tag.append(q);
+            // res += content;
+        } while (eval(conditionalContent));
+    }, "do", false, false);
 }(JTML);
 //# sourceMappingURL=control-flow.js.map
