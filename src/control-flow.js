@@ -82,4 +82,21 @@
             // res += content;
         } while (eval(conditionalContent));
     }, "do", false, false);
+
+    // for loop
+    // for loop must be xx in xx format
+    JTML.compiler.$compiler(function While(tag) {
+        let conditionalContent = tag.attr("conditional");
+        let content = tag.html();
+        tag.empty();
+        let tmp = conditionalContent.split("in");
+        let tokenName = tmp[0].trim();
+        let tokens = tokenName.split(".");
+        let value = tmp[1];
+        for (let i = 0; i < tokens.length; i++) {
+            tokens[i] = tokens[i].trim();
+        }
+        let scope = global;
+        for (let i = 0; i < tokens.length - 1; i++) scope = scope[tokens[i]];
+    }, "while", false, false);
 }(JTML);
