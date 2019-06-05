@@ -1,5 +1,5 @@
 # Sword-JTML
-It's a Scripted HTML format module of [Sword]().
+It's a Scripted HTML format module of [Sword](https://github.com/qianduanXIAOHAOZI/Sword).
 
 ## Summary
 [Summary.md](SUMMARY.md)
