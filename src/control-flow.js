@@ -99,4 +99,4 @@
         let scope = global;
         for (let i = 0; i < tokens.length - 1; i++) scope = scope[tokens[i]];
     }, "while", false, false);
-}(JTML);
+}(sword.JTML);

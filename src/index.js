@@ -8,6 +8,9 @@
 
  */
 
+const jQuery = require("./../dependencies/jquery-3.3.1.min.js");
+const $ = jQuery;
+
 const JTML = {};
 const global = globalThis;
 
@@ -53,16 +56,26 @@ const global = globalThis;
             JTML.each(domain, tmp);
         }
     };
+    JTML.resetDomain = function () {
+        JTML.DOMAIN = $("body:first");
+    };
+    JTML.updateCompile = function () {
+        if (JTML.compileNow) JTML.compile();// 编译domain内容
+        let jtml = $("jtml");
+        for (let i = 0; i < jtml.length; i++) {
+            JTML.compile($(jtml[i]));
+        }
+    };
+    JTML.select = function (t) {
+        this.DOMAIN = $(t);
+    };
+
+    sword.define("JTML", function (exports) {
+        exports(JTML);
+    });
 }(JTML);
 
 $(document).ready(function () {
-    JTML.DOMAIN = $("body:first");
-
-    if (JTML.compileNow) JTML.compile();// 编译domain内容
-
-    // 编译所有jtml标签包裹的内容
-    let jtml = $("jtml");
-    for (let i = 0; i < jtml.length; i++) {
-        JTML.compile($(jtml[i]));
-    }
+    JTML.resetDomain();
+    JTML.updateCompile();
 });

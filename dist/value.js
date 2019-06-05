@@ -54,5 +54,5 @@
         eval(tag.text());
         // console.log(tag.text());
     }, "value");
-}(JTML);
+}(sword.JTML);
 //# sourceMappingURL=value.js.map

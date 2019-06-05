@@ -97,5 +97,5 @@
             scope = scope[tokens[_i]];
         }
     }, "while", false, false);
-}(JTML);
+}(sword.JTML);
 //# sourceMappingURL=control-flow.js.map
